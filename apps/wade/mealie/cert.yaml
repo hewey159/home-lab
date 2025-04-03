@@ -1,0 +1,11 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mealie-tls
+spec:
+  secretName: mealie-tls
+  issuerRef:
+    name: letsencrypt-prod
+  dnsNames:
+    - mealie-test.hewett.club

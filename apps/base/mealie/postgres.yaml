@@ -1,0 +1,60 @@
+---
+# PostgreSQL Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      # When mounting the postgress database it seems to throw permission errors.
+      # this forces the permissions to be correct, there may be a better way to do this...
+      initContainers:
+        - name: prepare-pgdata
+          image: busybox
+          command:
+            [
+              "sh",
+              "-c",
+              "mkdir -p /var/lib/postgresql/data/pgdata && chown -R 999:999 /var/lib/postgresql/data/pgdata",
+            ]
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+      containers:
+        - name: postgres
+          image: postgres:15
+          env:
+            - name: POSTGRES_USER
+              value: mealie
+            - name: POSTGRES_PASSWORD
+              value: mealie
+            - name: POSTGRES_DB
+              value: mealie
+            - name: PGDATA # Add PGDATA environment variable
+              value: /var/lib/postgresql/data/pgdata
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+          livenessProbe:
+            exec:
+              command: ["pg_isready", "-h", "localhost"]
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-h", "localhost"]
+            initialDelaySeconds: 5
+            periodSeconds: 10
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: mealie-pgdata-pvc

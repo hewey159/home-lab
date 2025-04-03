@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mealie
+  namespace: argocd
+spec:
+  project: default
+
+  sources:
+    - repoURL: git@github.com:hewey159/home-lab.git
+      targetRevision: HEAD
+      path: apps/base/mealie
+    - repoURL: git@github.com:hewey159/home-lab.git
+      targetRevision: HEAD
+      path: apps/wade/mealie
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: mealie
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true

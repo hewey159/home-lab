@@ -1,0 +1,39 @@
+---
+# Mealie Persistent Volume
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mealie-data-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+
+---
+# Mealie Persistent Volume
+#todo is there a way around this?
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mealie-storage-nltk
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+# PostgreSQL Persistent Volume
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mealie-pgdata-pvc
+spec:
+  storageVolumeClaim: longhorn
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi

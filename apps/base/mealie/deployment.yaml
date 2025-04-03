@@ -1,0 +1,92 @@
+---
+# Mealie Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mealie
+spec:
+  selector:
+    matchLabels:
+      app: mealie
+  template:
+    metadata:
+      labels:
+        app: mealie
+    spec:
+      securityContext:
+        runAsUser: 1000 # Matches PUID
+        runAsGroup: 1000 # Matches PGID
+        fsGroup: 1000
+      # since adding the livness probe I don't think I need this wait since the probe will do it for me?
+      initContainers:
+        - name: wait-for-postgres
+          image: postgres:15
+          command:
+            [
+              "sh",
+              "-c",
+              "until pg_isready -h postgres-service -p 5432 -U mealie; do echo waiting for postgres; sleep 2; done;",
+            ]
+          env:
+            - name: PGPASSWORD
+              value: mealie
+      containers:
+        - name: mealie
+          image: ghcr.io/mealie-recipes/mealie:v2.8.0
+          env:
+            - name: ALLOW_SIGNUP
+              value: "false"
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: America/Anchorage
+            - name: MAX_WORKERS
+              value: "1"
+            - name: WEB_CONCURRENCY
+              value: "1"
+            - name: BASE_URL
+              value: http://localhost:9000
+            - name: DB_ENGINE
+              value: postgres
+            - name: POSTGRES_USER
+              value: mealie
+            - name: POSTGRES_PASSWORD
+              value: mealie
+            - name: POSTGRES_SERVER
+              value: postgres-service
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_DB
+              value: mealie
+          ports:
+            - containerPort: 9000
+          volumeMounts:
+            - name: mealie-storage
+              mountPath: /app/data
+            - name: mealie-storage-nltk
+              mountPath: /nltk_data
+          resources:
+            limits:
+              memory: "1000Mi"
+          # in a DR the mealie pod wasn't getting restarted and it would get stuck. this forces the pod to restart
+          livenessProbe:
+            httpGet:
+              path: /api/app/about
+              port: 9000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api/app/about
+              port: 9000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+      volumes:
+        - name: mealie-storage
+          persistentVolumeClaim:
+            claimName: mealie-data-pvc
+        - name: mealie-storage-nltk
+          persistentVolumeClaim:
+            claimName: mealie-storage-nltk

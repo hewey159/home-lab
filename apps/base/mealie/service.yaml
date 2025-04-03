@@ -1,0 +1,28 @@
+---
+# Mealie Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mealie-service
+spec:
+  selector:
+    app: mealie
+  ports:
+    - protocol: TCP
+      port: 9000
+      targetPort: 9000
+
+---
+# PostgreSQL Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+spec:
+  type: ClusterIP
+  selector:
+    app: postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
