@@ -30,6 +30,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mealie-pgdata-pvc
+  annotations:
+    longhorn.io/recurring-job-group: '["daily-backup"]'
 spec:
   storageVolumeClaim: longhorn
   accessModes:
