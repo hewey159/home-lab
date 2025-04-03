@@ -1,0 +1,8 @@
+longhornUI:
+  replicas: 2
+defaultBackupStore:
+  backupTarget: "nfs://192.168.0.196:/mnt/nas/nfs-k8s"
+defaultSettings:
+  nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod #makes sure3 when a node dies the vomlues are detatched and the pods cna move to new nodes safely?
+preUpgradeChecker:
+  jobEnabled: false

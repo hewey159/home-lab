@@ -5,19 +5,23 @@ metadata:
   namespace: argocd
 spec:
   project: default
-
   sources:
-    - repoURL: git@github.com:hewey159/home-lab.git
+    - repoURL: https://github.com/hewey159/home-lab.git # Your Git repo
+      path: infrastructure/base/argocd-apps/longhorn # Path to the kustomization.yaml
+      targetRevision: main # Your branch
+      kustomize: {} # Enable Kustomize processing
+    - repoURL: https://github.com/hewey159/home-lab.git
       targetRevision: HEAD
       path: infrastructure/base/longhorn
+    - repoURL: https://github.com/hewey159/home-lab.git
+      targetRevision: HEAD
+      path: infrastructure/wade/longhorn
   destination:
     server: https://kubernetes.default.svc
-    namespace: longhorn-system-backups
-
+    namespace: longhorn-system
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-
     automated:
       selfHeal: true
       prune: true

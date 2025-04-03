@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+helmCharts:
+  - name: longhorn
+    repo: https://charts.longhorn.io
+    version: v1.8.1 # Match your target version
+    releaseName: longhorn
+    namespace: longhorn-system
+    valuesFile: longhorn-values.yaml # Path is relative to this file
