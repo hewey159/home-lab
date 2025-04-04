@@ -33,7 +33,6 @@ metadata:
   annotations:
     longhorn.io/recurring-job-group: '["daily-backup"]'
 spec:
-  storageVolumeClaim: longhorn
   accessModes:
     - ReadWriteOnce
   resources:
