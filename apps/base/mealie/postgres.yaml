@@ -13,6 +13,9 @@ spec:
       labels:
         app: postgres
     spec:
+      # not ideal, but trying and stop the pvc longhorn from holding up redeploys
+      strategy:
+        type: Recreate
       # When mounting the postgress database it seems to throw permission errors.
       # this forces the permissions to be correct, there may be a better way to do this...
       initContainers:
@@ -33,8 +36,11 @@ spec:
           env:
             - name: POSTGRES_USER
               value: mealie
-            - name: POSTGRES_PASSWORD
-              value: mealie
+            - name: POSTGRES_PASSWORD # Now sourced from Secret
+              valueFrom:
+                secretKeyRef:
+                  name: mealie-secret # Name of the Secret created by InfisicalSecret
+                  key: POSTGRES_PASSWORD # Key in the Secret
             - name: POSTGRES_DB
               value: mealie
             - name: PGDATA # Add PGDATA environment variable

@@ -13,6 +13,9 @@ spec:
       labels:
         app: mealie
     spec:
+      # not ideal, but trying and stop the pvc longhorn from holding up redeploys
+      strategy:
+        type: Recreate
       securityContext:
         runAsUser: 1000 # Matches PUID
         runAsGroup: 1000 # Matches PGID
@@ -28,8 +31,11 @@ spec:
               "until pg_isready -h postgres-service -p 5432 -U mealie; do echo waiting for postgres; sleep 2; done;",
             ]
           env:
-            - name: PGPASSWORD
-              value: mealie
+            - name: POSTGRES_PASSWORD # Now sourced from Secret
+              valueFrom:
+                secretKeyRef:
+                  name: mealie-secret # Name of the Secret created by InfisicalSecret
+                  key: POSTGRES_PASSWORD # Key in the Secret
       containers:
         - name: mealie
           image: ghcr.io/mealie-recipes/mealie:v2.8.0
@@ -52,8 +58,11 @@ spec:
               value: postgres
             - name: POSTGRES_USER
               value: mealie
-            - name: POSTGRES_PASSWORD
-              value: mealie
+            - name: POSTGRES_PASSWORD # Now sourced from Secret
+              valueFrom:
+                secretKeyRef:
+                  name: mealie-secret # Name of the Secret created by InfisicalSecret
+                  key: POSTGRES_PASSWORD # Key in the Secret
             - name: POSTGRES_SERVER
               value: postgres-service
             - name: POSTGRES_PORT
