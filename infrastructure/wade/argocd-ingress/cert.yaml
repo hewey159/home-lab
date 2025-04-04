@@ -1,0 +1,13 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-tls
+  namespace: argocd # Argo CD's default namespace
+spec:
+  secretName: argocd-tls # Secret where cert will be stored
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+    - argocd.hewett.club # Your Argo CD domain
