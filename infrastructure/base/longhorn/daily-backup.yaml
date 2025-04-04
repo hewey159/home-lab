@@ -9,7 +9,7 @@ spec:
   task: "backup"
   groups:
     - daily-backup
-  retain: 1
+  retain: 2
   concurrency: 1
 ---
 apiVersion: longhorn.io/v1beta1

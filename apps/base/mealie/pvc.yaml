@@ -4,6 +4,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mealie-data-pvc
+  annotations:
+    longhorn.io/recurring-job-group: '["daily-backup"]'
 spec:
   accessModes:
     - ReadWriteOnce
@@ -18,6 +20,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mealie-storage-nltk
+  annotations:
+    longhorn.io/recurring-job-group: '["daily-backup"]'
 spec:
   accessModes:
     - ReadWriteOnce
