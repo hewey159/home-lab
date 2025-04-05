@@ -5,15 +5,15 @@ kind: Ingress
 metadata:
   name: mealie-ingress
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
     #mealie has a bacup/restore option and so it needs a big body size
     nginx.ingress.kubernetes.io/proxy-body-size: "50m"
 spec:
   ingressClassName: nginx
-  tls:
-    - hosts:
-        - mealie-test.hewett.club
-      secretName: mealie-tls
+  # tls:
+  #   - hosts:
+  #       - mealie-test.hewett.club
+  #     secretName: mealie-tls
   rules:
     - host: mealie-test.hewett.club
       http:
