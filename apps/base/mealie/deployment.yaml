@@ -21,21 +21,21 @@ spec:
         runAsGroup: 1000 # Matches PGID
         fsGroup: 1000
       # since adding the livness probe I don't think I need this wait since the probe will do it for me?
-      initContainers:
-        - name: wait-for-postgres
-          image: postgres:15
-          command:
-            [
-              "sh",
-              "-c",
-              "until pg_isready -h postgres-service -p 5432 -U mealie; do echo waiting for postgres; sleep 2; done;",
-            ]
-          env:
-            - name: POSTGRES_PASSWORD # Now sourced from Secret
-              valueFrom:
-                secretKeyRef:
-                  name: mealie-secret # Name of the Secret created by InfisicalSecret
-                  key: POSTGRES_PASSWORD # Key in the Secret
+      # initContainers:
+      #   - name: wait-for-postgres
+      #     image: postgres:15
+      #     command:
+      #       [
+      #         "sh",
+      #         "-c",
+      #         "until pg_isready -h postgres-service -p 5432 -U mealie; do echo waiting for postgres; sleep 2; done;",
+      #       ]
+      #     env:
+      #       - name: POSTGRES_PASSWORD # Now sourced from Secret
+      #         valueFrom:
+      #           secretKeyRef:
+      #             name: mealie-secret # Name of the Secret created by InfisicalSecret
+      #             key: POSTGRES_PASSWORD # Key in the Secret
       containers:
         - name: mealie
           image: ghcr.io/mealie-recipes/mealie:v2.8.0
@@ -47,28 +47,28 @@ spec:
             - name: PGID
               value: "1000"
             - name: TZ
-              value: America/Anchorage
-            - name: MAX_WORKERS
-              value: "1"
-            - name: WEB_CONCURRENCY
-              value: "1"
+              value: Australia/Adelaide
+            # - name: MAX_WORKERS
+            #   value: "1"
+            # - name: WEB_CONCURRENCY
+            #   value: "1"
             - name: BASE_URL
-              value: http://localhost:9000
-            - name: DB_ENGINE
-              value: postgres
-            - name: POSTGRES_USER
-              value: mealie
-            - name: POSTGRES_PASSWORD # Now sourced from Secret
-              valueFrom:
-                secretKeyRef:
-                  name: mealie-secret # Name of the Secret created by InfisicalSecret
-                  key: POSTGRES_PASSWORD # Key in the Secret
-            - name: POSTGRES_SERVER
-              value: postgres-service
-            - name: POSTGRES_PORT
-              value: "5432"
-            - name: POSTGRES_DB
-              value: mealie
+              value: https://mealie-test.hewett.club
+            # - name: DB_ENGINE
+            #   value: postgres
+            # - name: POSTGRES_USER
+            #   value: mealie
+            # - name: POSTGRES_PASSWORD # Now sourced from Secret
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: mealie-secret # Name of the Secret created by InfisicalSecret
+            #       key: POSTGRES_PASSWORD # Key in the Secret
+            # - name: POSTGRES_SERVER
+            #   value: postgres-service
+            # - name: POSTGRES_PORT
+            #   value: "5432"
+            # - name: POSTGRES_DB
+            #   value: mealie
           ports:
             - containerPort: 9000
           volumeMounts:
