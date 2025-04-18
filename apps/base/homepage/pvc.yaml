@@ -1,0 +1,14 @@
+---
+# HomePage Persistent Volume
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: homepage-storage
+  annotations:
+    longhorn.io/recurring-job-group: '["daily-backup"]'
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
