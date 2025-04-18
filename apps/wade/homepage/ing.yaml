@@ -15,7 +15,7 @@ spec:
   tls:
     - hosts:
         - homepage.hewett.club
-      secretName: homepage
+      secretName: homepage-tls
   rules:
     - host: homepage.hewett.club
       http:
