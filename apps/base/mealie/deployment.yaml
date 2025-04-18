@@ -48,27 +48,27 @@ spec:
               value: "1000"
             - name: TZ
               value: Australia/Adelaide
-            # - name: MAX_WORKERS
-            #   value: "1"
-            # - name: WEB_CONCURRENCY
-            #   value: "1"
+            - name: MAX_WORKERS
+              value: "1"
+            - name: WEB_CONCURRENCY
+              value: "1"
             - name: BASE_URL
               value: https://mealie-test.hewett.club
-            # - name: DB_ENGINE
-            #   value: postgres
-            # - name: POSTGRES_USER
-            #   value: mealie
-            # - name: POSTGRES_PASSWORD # Now sourced from Secret
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: mealie-secret # Name of the Secret created by InfisicalSecret
-            #       key: POSTGRES_PASSWORD # Key in the Secret
-            # - name: POSTGRES_SERVER
-            #   value: postgres-service
-            # - name: POSTGRES_PORT
-            #   value: "5432"
-            # - name: POSTGRES_DB
-            #   value: mealie
+            - name: DB_ENGINE
+              value: postgres
+            - name: POSTGRES_USER
+              value: mealie
+            - name: POSTGRES_PASSWORD # Now sourced from Secret
+              valueFrom:
+                secretKeyRef:
+                  name: mealie-secret # Name of the Secret created by InfisicalSecret
+                  key: POSTGRES_PASSWORD # Key in the Secret
+            - name: POSTGRES_SERVER
+              value: postgres-service
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_DB
+              value: mealie
           ports:
             - containerPort: 9000
           volumeMounts:
