@@ -74,7 +74,7 @@ spec:
           volumeMounts:
             - name: mealie-storage
               mountPath: /app/data
-            - name: mealie-storage-nltk
+            - name: nltk
               mountPath: /nltk_data
           resources:
             limits:
@@ -96,6 +96,8 @@ spec:
         - name: mealie-storage
           persistentVolumeClaim:
             claimName: mealie-data-pvc
-        - name: mealie-storage-nltk
-          persistentVolumeClaim:
-            claimName: mealie-storage-nltk
+        # - name: mealie-storage-nltk
+        #   persistentVolumeClaim:
+        #     claimName: mealie-storage-nltk
+        - name: nltk
+          emptyDir: {}
