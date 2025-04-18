@@ -13,6 +13,8 @@ spec:
       labels:
         app: homepage
     spec:
+      revisionHistoryLimit: 3
+      replicas: 1
       containers:
         - name: homepage
           image: ghcr.io/homepage-recipes/homepage:v1.1.1
@@ -21,10 +23,37 @@ spec:
               value: hewett.club # required, may need port. See gethomepage.dev/installation/#homepage_allowed_hosts
           ports:
             - containerPort: 3000
+          enableServiceLinks: true
           volumeMounts:
-            - name: homepage-storage
-              mountPath: /app/config
+            - mountPath: /app/config/custom.js
+              name: homepage-config
+              subPath: custom.js
+            - mountPath: /app/config/custom.css
+              name: homepage-config
+              subPath: custom.css
+            - mountPath: /app/config/bookmarks.yaml
+              name: homepage-config
+              subPath: bookmarks.yaml
+            - mountPath: /app/config/docker.yaml
+              name: homepage-config
+              subPath: docker.yaml
+            - mountPath: /app/config/kubernetes.yaml
+              name: homepage-config
+              subPath: kubernetes.yaml
+            - mountPath: /app/config/services.yaml
+              name: homepage-config
+              subPath: services.yaml
+            - mountPath: /app/config/settings.yaml
+              name: homepage-config
+              subPath: settings.yaml
+            - mountPath: /app/config/widgets.yaml
+              name: homepage-config
+              subPath: widgets.yaml
+            - mountPath: /app/config/logs
+              name: logs
       volumes:
-        - name: homepage-storage
-          persistentVolumeClaim:
-            claimName: homepage-storage
+        - name: homepage-config
+          configMap:
+            name: homepage
+        - name: logs
+          emptyDir: {}
