@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pihole
+  namespace: argocd
+spec:
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
+  project: default
+  sources:
+    - chart: pihole
+      repoURL: https://mojo2600.github.io/pihole-kubernetes/
+      targetRevision: 2.29.1 # Replace with the pihole version you'd like to install or upgrade to
+      helm:
+        values: |
+          # will create kubernees ingress
+          ingress:
+            enabled: false
+
+          # will create kubernetes services for web admin
+          serviceWeb:
+            loadBalancerIP: 192.168.0.201
+            type: ClusterIP
+              metallb.universe.tf/allow-shared-ip: pihole-svc
+            
+          # get the password from infisical which will set your admin password for the web inteface
+          admin:
+            existingSecret: "pihole-password"
+            passwordKey: "PASSWORD"
+            
+          # create a kubernetes service and expose
+          # port 53 outside of cluster on the local network
+          serviceDns:
+            loadBalancerIP: 192.168.0.201
+            type: LoadBalancer
+            annotations:
+              metallb.universe.tf/allow-shared-ip: pihole-svc
+
+    - repoURL: git@github.com:hewey159/home-lab.git
+      targetRevision: HEAD
+      path: infrastructure/wade/pihole
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: pihole
