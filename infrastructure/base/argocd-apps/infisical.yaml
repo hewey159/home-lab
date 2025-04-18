@@ -27,9 +27,9 @@ spec:
               - hosts:
                   - secret.hewett.club
                 secretName: secret-tls
-    - repoURL: git@github.com:hewey159/home-lab.git
-      targetRevision: HEAD
-      path: infrastructure/wade/infisical
+    - chart: secrets-operator
+      repoURL: "https://dl.cloudsmith.io/public/infisical/helm-charts/helm/charts/"
+      targetRevision: 0.9.1
   destination:
     server: https://kubernetes.default.svc
     namespace: infisical
