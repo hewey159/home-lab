@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: infisical
+  namespace: argocd
+spec:
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
+  project: default
+  sources:
+    - chart: infisical-standalone
+      repoURL: "https://dl.cloudsmith.io/public/infisical/helm-charts/helm/charts/"
+      targetRevision: 1.5.0
+      helm:
+        values: |
+          ingress:
+            nginx:
+              enabled: false
+            hostName: secret.hewett.club
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-prod
+            tls:
+              - hosts:
+                  - secret.hewett.club
+                secretName: secret-tls
+    - repoURL: git@github.com:hewey159/home-lab.git
+      targetRevision: HEAD
+      path: infrastructure/wade/infisical
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: infisical
