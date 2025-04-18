@@ -14,10 +14,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - homepage.hewett.club
+        - hewett.club
       secretName: homepage-tls
   rules:
-    - host: homepage.hewett.club
+    - host: hewett.club
       http:
         paths:
           - path: /
