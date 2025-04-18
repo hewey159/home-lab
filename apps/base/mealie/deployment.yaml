@@ -8,14 +8,14 @@ spec:
   selector:
     matchLabels:
       app: mealie
+    # not ideal, but trying and stop the pvc longhorn from holding up redeploys
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: mealie
     spec:
-      # not ideal, but trying and stop the pvc longhorn from holding up redeploys
-      strategy:
-        type: Recreate
       securityContext:
         runAsUser: 1000 # Matches PUID
         runAsGroup: 1000 # Matches PGID

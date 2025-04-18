@@ -8,14 +8,14 @@ spec:
   selector:
     matchLabels:
       app: postgres
+  # not ideal, but trying and stop the pvc longhorn from holding up redeploys
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: postgres
     spec:
-      # not ideal, but trying and stop the pvc longhorn from holding up redeploys
-      strategy:
-        type: Recreate
       # When mounting the postgress database it seems to throw permission errors.
       # this forces the permissions to be correct, there may be a better way to do this...
       initContainers:
