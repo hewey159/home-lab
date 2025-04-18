@@ -4,25 +4,30 @@ metadata:
   name: longhorn
   namespace: argocd
 spec:
-  project: default
-  sources:
-    # todo use this to install longhorn instead of manually doing it
-    # - repoURL: https://github.com/hewey159/home-lab.git # Your Git repo
-    #   path: infrastructure/base/argocd-apps/longhorn # Path to the kustomization.yaml
-    #   targetRevision: main # Your branch
-    #   kustomize: {} # Enable Kustomize processing
-    - repoURL: https://github.com/hewey159/home-lab.git
-      targetRevision: HEAD
-      path: infrastructure/base/longhorn
-    - repoURL: https://github.com/hewey159/home-lab.git
-      targetRevision: HEAD
-      path: infrastructure/wade/longhorn
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: longhorn-system
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
     automated:
       selfHeal: true
       prune: true
+  project: default
+  sources:
+    - chart: longhorn
+      repoURL: https://charts.longhorn.io/
+      targetRevision: v1.8.1 # Replace with the Longhorn version you'd like to install or upgrade to
+      helm:
+        values: |
+          preUpgradeChecker:
+            jobEnabled: false
+          longhornUI:
+            replicas: 2
+          defaultBackupStore:
+            backupTarget: "nfs://192.168.0.196:/mnt/nas/nfs-k8s"
+          defaultSettings:
+            nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod #makes sure3 when a node dies the vomlues are detatched and the pods cna move to new nodes safely?
+    - repoURL: git@github.com:hewey159/home-lab.git
+      targetRevision: HEAD
+      path: infrastructure/wade/longhorn
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: longhorn-system
