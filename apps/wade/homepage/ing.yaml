@@ -15,7 +15,7 @@ spec:
   tls:
     - hosts:
         - hewett.club
-      secretName: mealie-tls
+      secretName: homepage
   rules:
     - host: hewett.club
       http:
