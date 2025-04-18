@@ -1,0 +1,8 @@
+---
+apiVersion: metallb.io/v1beta
+kind: L2Advertisement
+metadata:
+  name: pool
+spec:
+  ipAddresssPools:
+    - pool
