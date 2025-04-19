@@ -5,11 +5,11 @@ metadata:
   name: argocd-ingress
   namespace: argocd
   annotations:
-    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS" # Important for Argo CD
     cert-manager.io/cluster-issuer: letsencrypt-prod
     # Optional security headers:
-    # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: "0" # Disable upload size limit
 
     # nginx.ingress.kubernetes.io/auth-type: basic
