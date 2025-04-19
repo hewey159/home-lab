@@ -4,3 +4,4 @@ resources:
   - cert.yaml
   - ing.yaml
   - secret.yaml
+  - daily-backup.yaml
