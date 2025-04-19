@@ -15,6 +15,11 @@ spec:
     - chart: metallb
       repoURL: https://metallb.github.io/metallb
       targetRevision: 0.14.9
+      helm:
+        values: |
+          # talos has these labels so we want to ignore them https://github.com/siderolabs/talos/issues/10291#issuecomment-2637482414
+          speaker:
+            ignoreExcludeLB: true
     - repoURL: git@github.com:hewey159/home-lab.git
       targetRevision: HEAD
       path: infrastructure/wade/metallb
