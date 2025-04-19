@@ -23,22 +23,50 @@ spec:
 
           # will create kubernetes services for web admin
           serviceWeb:
-            loadBalancerIP: 192.168.0.201
-            type: ClusterIP
+            loadBalancerIP: 192.168.0.202
+            type: LoadBalancer
+            annotations:
               metallb.universe.tf/allow-shared-ip: pihole-svc
             
           # get the password from infisical which will set your admin password for the web inteface
           admin:
             existingSecret: "pihole-password"
             passwordKey: "PASSWORD"
+
+          #todo do i need this to access local ips?
+          DNS1:
+            192.168.0.1
+
+          #allow ads in google otherwise google search sponsered shopoing at the top sucks
+          whitelist: 
+            - t.myvisualiq.net
+            - clickserve.dartsearch.net
+            - ad.doubleclick.net
+            - dartsearch.net
+            - www.googletagservices.com
+            - www.googletagmanager.com
+            - www.googleadservices.com	
+
+          #TODO this is bad and allows anyone to get to my dns resolver??
+          dnsmasq:
+            customDnsEntries:
+              - "except-interface=nonexisting"  # Key directive to allow all origins
+              - address=/mealie-test.hewett.club/192.168.0.189
+              - address=/argocd.hewett.club/192.168.0.189
+            
             
           # create a kubernetes service and expose
           # port 53 outside of cluster on the local network
           serviceDns:
-            loadBalancerIP: 192.168.0.201
+            loadBalancerIP: 192.168.0.202
             type: LoadBalancer
             annotations:
               metallb.universe.tf/allow-shared-ip: pihole-svc
+
+          adlists:
+            - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/multi.txt
+
+          replicaCount: 1
 
     - repoURL: git@github.com:hewey159/home-lab.git
       targetRevision: HEAD
