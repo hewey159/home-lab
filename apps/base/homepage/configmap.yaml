@@ -6,7 +6,7 @@ data:
   kubernetes.yaml: |
     mode: cluster
   # settings.yaml: ""
-  settings.yaml: |
+  settings.template.yaml: |
     providers:
       longhorn:
         url: https://longhorn.hewett.club
