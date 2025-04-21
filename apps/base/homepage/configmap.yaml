@@ -5,13 +5,13 @@ metadata:
 data:
   kubernetes.yaml: |
     mode: cluster
-  settings.yaml: ""
-  # settings.yaml: |
-  #   providers:
-  #     longhorn:
-  #       url: https://longhorn.hewett.club
-  #       username:
-  #       password: <get from secrets>
+  # settings.yaml: ""
+  settings.yaml: |
+    providers:
+      longhorn:
+        url: https://longhorn.hewett.club
+        username: ${LONGHORN_USERNAME}
+        password: ${LONGHORN_PASSWORD}
   custom.css: ""
   custom.js: ""
   bookmarks.yaml: |
@@ -56,4 +56,13 @@ data:
     - search:
         provider: duckduckgo
         target: _blank
+    - longhorn:
+      # Show the expanded view
+      expanded: true
+      # Shows a node representing the aggregate values
+      total: true
+      # Shows the node names as labels
+      labels: true
+      # Show the nodes
+      nodes: true
   docker.yaml: ""
