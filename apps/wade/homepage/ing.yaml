@@ -7,7 +7,7 @@ metadata:
   annotations:
     # type of authentication
     nginx.ingress.kubernetes.io/auth-type: basic
-    nginx.ingress.kubernetes.io/auth-secret: homepage-auth
+    nginx.ingress.kubernetes.io/auth-secret: longhorn-system/longhorn-secret
     nginx.ingress.kubernetes.io/auth-realm: "Authentication Required"
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
