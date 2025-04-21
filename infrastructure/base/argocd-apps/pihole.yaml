@@ -47,13 +47,13 @@ spec:
             - www.googletagmanager.com
             - www.googleadservices.com	
 
-          #TODO this is bad and allows anyone to get to my dns resolver??
           dnsmasq:
             customDnsEntries:
               - "except-interface=nonexisting"  # Key directive to allow all origins
               - address=/mealie-test.hewett.club/192.168.0.189
               - address=/argocd.hewett.club/192.168.0.189
-            
+              - address=/longhorn.hewett.club/192.168.0.189
+              - address=/secret.hewett.club/192.168.0.189
             
           # create a kubernetes service and expose
           # port 53 outside of cluster on the local network
