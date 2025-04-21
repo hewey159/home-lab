@@ -20,29 +20,53 @@ data:
             - abbr: GH
               href: https://github.com/
   services.template.yaml: |
-    - My First Group:
-        - My First Service:
-            href: http://localhost/
-            description: Homepage is awesome
-
-    - My Second Group:
-        - My Second Service:
-            href: http://localhost/
-            description: Homepage is the best
-
-    - My Third Group:
-        - My Third Service:
-            href: http://localhost/
-            description: Homepage is 😎
-    - Plex:
-        - something:
-            href: http://localhost/
-            description: Homepage is 😎
+    - Media:
+        - Plex:
+            icon: plex.svg
+            href: http://192.168.0.21:32400
             widget:
               type: plex
               url: http://192.168.0.21:32400
               key: ${PLEX_TOKEN} 
               fields: ["streams", "albums", "movies", "tv"]
+        - Sonarr:
+            icon: sonarr.svg
+            href: http://192.168.0.21:8989
+            widget:
+              type: sonarr
+              url: http://192.168.0.21:8989
+              key: ${SONAR_KEY} 
+              enableQueue: true # optional, defaults to false
+        - Radarr:
+            icon: radarr.svg
+            href: http://192.168.0.21:7878
+            widget:
+              type: radarr
+              url: http://192.168.0.21:7878
+              key: ${RADARR_KEY} 
+              enableQueue: true # optional, defaults to false
+        - Transmission:
+            icon: transmission.svg
+            href: http://192.168.0.21:9091
+            widget:
+              type: transmission
+              url: http://192.168.0.21:9091
+        - Overseerr:
+            icon: overseerr.svg
+            href: https://movies.hewett.club
+            widget:
+              type: overseerr
+              url: https://movies.hewett.club
+              key: ${OVERSEERR_KEY} 
+        - CalibreWeb:
+            icon: calibre-web.svg
+            href: http://192.168.0.21:8083
+            widget:
+              type: calibreweb
+              url: http://192.168.0.21:8083
+              username: ${CALIBRE_USERNAME}
+              password: ${CALIBRE_PASSWORD}
+
   widgets.template.yaml: |
     - kubernetes:
         cluster:

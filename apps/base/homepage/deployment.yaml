@@ -38,6 +38,31 @@ spec:
                 secretKeyRef:
                   name: plex-secret
                   key: PLEX_TOKEN
+            - name: SONAR_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: sonarr-secret
+                  key: SONAR_KEY
+            - name: RADARR_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: radarr-secret
+                  key: RADARR_KEY
+            - name: OVERSEERR_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: overseerr-secret
+                  key: OVERSEERR_KEY
+            - name: CALIBRE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: calibre-secret
+                  key: CALIBRE_USERNAME
+            - name: CALIBRE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: calibre-secret
+                  key: CALIBRE_PASSWORD
           volumeMounts:
             - name: config-template
               mountPath: /config-tmpl
@@ -49,16 +74,6 @@ spec:
           env:
             - name: HOMEPAGE_ALLOWED_HOSTS
               value: homepage.hewett.club
-            - name: LONGHORN_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: longhorn-secret
-                  key: BASIC_AUTH_USERNAME
-            - name: LONGHORN_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: longhorn-secret
-                  key: BASIC_AUTH_PASSWORD
           ports:
             - containerPort: 3000
           volumeMounts:
