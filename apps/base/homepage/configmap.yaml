@@ -53,9 +53,9 @@ data:
         cpu: true
         memory: true
         network: default
-    - search:
-        provider: duckduckgo
-        target: _blank
+    # - search:
+    #     provider: duckduckgo
+    #     target: _blank
     - longhorn:
       # Show the expanded view
       expanded: true
