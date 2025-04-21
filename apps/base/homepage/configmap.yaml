@@ -34,7 +34,7 @@ data:
         - My Third Service:
             href: http://localhost/
             description: Homepage is 😎
-  widgets.yaml: |
+  widgets.template.yaml: |
     - kubernetes:
         cluster:
           show: true
@@ -56,17 +56,20 @@ data:
     # - search:
     #     provider: duckduckgo
     #     target: _blank
-    - longhorn:
-      # Show the expanded view
-      expanded: true
-      # Shows a node representing the aggregate values
-      total: true
-      # Shows the node names as labels
-      labels: true
-      # Show the nodes
-      nodes: false
+    # - longhorn:
+    #   # Show the expanded view
+    #   expanded: true
+    #   # Shows a node representing the aggregate values
+    #   total: true
+    #   # Shows the node names as labels
+    #   labels: true
+    #   # Show the nodes
+    #   nodes: false
     - datetime:
         text_size: xl
         format:
           timeStyle: short
+    - plex:
+        url: http://192.168.0.21:32400  # Replace with your Plex URL
+        key: ${PLEX_TOKEN}                   # Replace with your Plex token
   docker.yaml: ""

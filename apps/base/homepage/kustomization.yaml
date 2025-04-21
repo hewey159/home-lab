@@ -6,3 +6,4 @@ resources:
   - configmap.yaml
   - rbac.yaml
   - longhorn-secret.yaml
+  - plex-secret.yaml
