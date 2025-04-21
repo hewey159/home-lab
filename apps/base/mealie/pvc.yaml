@@ -12,22 +12,8 @@ spec:
   resources:
     requests:
       storage: 5Gi
+  volumeName: pvc-ad18e1f1-bcf9-456c-b054-94eae52fc8d0
 
----
-# Mealie Persistent Volume
-#todo is there a way around this?
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mealie-storage-nltk
-  annotations:
-    longhorn.io/recurring-job-group: '["daily-backup"]'
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
 ---
 # PostgreSQL Persistent Volume
 apiVersion: v1
@@ -42,3 +28,4 @@ spec:
   resources:
     requests:
       storage: 5Gi
+  volumeName: pvc-9fecbff1-f7b1-4237-90fd-bf2655ad80ef
