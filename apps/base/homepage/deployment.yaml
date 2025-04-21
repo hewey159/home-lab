@@ -20,8 +20,8 @@ spec:
             - |
               apk add --no-cache gettext && \
               envsubst < /config-tmpl/settings.template.yaml > /config/settings.yaml && \
-              envsubst < /config-tmpl/widgets.template.yaml > /config/widgets.yaml
-
+              envsubst < /config-tmpl/widgets.template.yaml > /config/widgets.yaml && \
+              envsubst < /config-tmpl/services.template.yaml > /config/services.yaml
           env:
             - name: LONGHORN_USERNAME
               valueFrom:
@@ -80,7 +80,7 @@ spec:
             - name: homepage-config
               mountPath: /app/config/kubernetes.yaml
               subPath: kubernetes.yaml
-            - name: homepage-config
+            - name: config-processed
               mountPath: /app/config/services.yaml
               subPath: services.yaml
             - name: config-processed

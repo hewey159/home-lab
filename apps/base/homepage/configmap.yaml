@@ -19,7 +19,7 @@ data:
         - Github:
             - abbr: GH
               href: https://github.com/
-  services.yaml: |
+  services.template.yaml: |
     - My First Group:
         - My First Service:
             href: http://localhost/
@@ -34,6 +34,15 @@ data:
         - My Third Service:
             href: http://localhost/
             description: Homepage is 😎
+    - Plex:
+        - something:
+            href: http://localhost/
+            description: Homepage is 😎
+            widget:
+              type: plex
+              url: http://192.168.0.21:32400
+              key: ${PLEX_TOKEN} 
+              fields: ["streams", "albums", "movies", "tv"]
   widgets.template.yaml: |
     - kubernetes:
         cluster:
@@ -69,7 +78,5 @@ data:
         text_size: xl
         format:
           timeStyle: short
-    - plex:
-        url: http://192.168.0.21:32400  # Replace with your Plex URL
-        key: ${PLEX_TOKEN}                   # Replace with your Plex token
+
   docker.yaml: ""
