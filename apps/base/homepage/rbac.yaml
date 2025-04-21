@@ -1,0 +1,22 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: homepage-node-reader
+rules:
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["list", "get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: homepage-node-reader-binding
+subjects:
+  - kind: ServiceAccount
+    name: default #homepage uses this name for their serviceaccount
+    namespace: homepage
+roleRef:
+  kind: ClusterRole
+  name: homepage-node-reader
+  apiGroup: rbac.authorization.k8s.io

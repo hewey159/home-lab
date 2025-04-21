@@ -5,7 +5,7 @@ metadata:
 data:
   kubernetes.yaml: |
     mode: cluster
-  # settings.yaml: ""
+  settings.yaml: ""
   # settings.yaml: |
   #   providers:
   #     longhorn:

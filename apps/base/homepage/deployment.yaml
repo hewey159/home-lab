@@ -13,7 +13,6 @@ spec:
       labels:
         app: homepage
     spec:
-      revisionHistoryLimit: 3
       containers:
         - name: homepage
           image: "ghcr.io/gethomepage/homepage:v1.1.1"
