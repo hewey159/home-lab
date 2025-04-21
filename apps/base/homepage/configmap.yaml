@@ -6,12 +6,12 @@ data:
   kubernetes.yaml: |
     mode: cluster
   # settings.yaml: ""
-  settings.yaml: |
-    providers:
-      longhorn:
-        url: https://longhorn.hewett.club
-        username:
-        password: <get from secrets>
+  # settings.yaml: |
+  #   providers:
+  #     longhorn:
+  #       url: https://longhorn.hewett.club
+  #       username:
+  #       password: <get from secrets>
   custom.css: ""
   custom.js: ""
   bookmarks.yaml: |
