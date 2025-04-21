@@ -64,5 +64,9 @@ data:
       # Shows the node names as labels
       labels: true
       # Show the nodes
-      nodes: true
+      nodes: false
+    - datetime:
+        text_size: xl
+        format:
+          timeStyle: short
   docker.yaml: ""
