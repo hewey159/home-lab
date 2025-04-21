@@ -9,6 +9,7 @@ spec:
   task: "backup"
   groups:
     - daily-backup
+    - default
   retain: 2
   concurrency: 1
 ---
@@ -22,5 +23,6 @@ spec:
   task: "snapshot"
   groups:
     - daily-backup
+    - default
   retain: 4
   concurrency: 1
