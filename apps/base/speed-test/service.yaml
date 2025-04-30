@@ -1,0 +1,13 @@
+---
+# Speed test Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: speed-test-service
+spec:
+  selector:
+    app: speed-test
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

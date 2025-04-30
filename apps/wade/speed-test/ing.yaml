@@ -1,0 +1,29 @@
+---
+# Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: speed-test
+  annotations:
+    # type of authentication
+    # nginx.ingress.kubernetes.io/auth-type: basic
+    # nginx.ingress.kubernetes.io/auth-secret: longhorn-system/longhorn-secret
+    # nginx.ingress.kubernetes.io/auth-realm: "Authentication Required"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - speed-test.hewett.club
+      secretName: speed-test-tls
+  rules:
+    - host: speed-test.hewett.club
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: speed-test
+                port:
+                  number: 3000

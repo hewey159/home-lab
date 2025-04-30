@@ -1,0 +1,14 @@
+---
+# Mealie Persistent Volume
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: speed-test-storage
+  annotations:
+    longhorn.io/recurring-job-group: '["daily-backup"]'
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi

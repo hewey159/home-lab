@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: speed-test
+spec:
+  selector:
+    matchLabels:
+      app: speed-test
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: speed-test
+    spec:
+      containers:
+        - name: speed-test
+          image: henrywhitaker3/speedtest-tracker:v1.12.3-dev
+          volumeMounts:
+            - name: speed-test-storage
+              mountPath: /config
+          ports:
+            - containerPort: 80
+      volumes:
+        - name: speed-test-storage
+          persistentVolumeClaim:
+            claimName: speed-test-storage
